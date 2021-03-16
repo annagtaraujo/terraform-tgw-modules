@@ -1,5 +1,4 @@
 resource "aws_subnet" "vpc-private-subnet" {
-  description = "Private subnet VPC B"
   for_each = {
     for config in local.private_subnets :
       config.cidr_block => config
@@ -14,7 +13,6 @@ resource "aws_subnet" "vpc-private-subnet" {
 }
 
 resource "aws_subnet" "vpc-public-subnet" {
-  description = "Public subnet VPC B"
   for_each = {
     for config in local.public_subnets :
       config.cidr_block => config
@@ -28,7 +26,6 @@ resource "aws_subnet" "vpc-public-subnet" {
 }
 
 resource "aws_subnet" "vpc-database-subnet" {
-  description = "Database subnet VPC B"
   for_each = {
     for config in local.database_subnets :
     config.cidr_block => config
