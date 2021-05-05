@@ -17,10 +17,21 @@ module "vpc_a" {
 
   create_igw            = true
   enable_nat_gateway     = true
-  #single_nat_gateway     = false
   one_nat_gateway_per_az = true
   #enable_vpn_gateway     = true
   enable_dns_hostnames    = true
+
+  manage_security_group  = true
+  security_group_ingress = [
+    {cidr_block = "0.0.0.0/0",from_port = 22, to_port = 22, protocol = "SSH"},
+    {cidr_block = "0.0.0.0/0",from_port = 80, to_port = 80, protocol = "TCP"}, 
+    {cidr_block = "0.0.0.0/0",from_port = 443, to_port = 443, protocol = "TCP"},
+    {cidr_block = "0.0.0.0/0",from_port = 0, to_port = 0, protocol = "ICMP"}]
+  security_group_egress  = [{cidr_block = "0.0.0.0/0",from_port = 0, to_port = 0}]
+  security_group_name = "VPC-A-SG"
+  security_group_tags = {
+    Name = "VPC-A-SG"
+    }
 
 #   tags = {
 #     Terraform   = "true"
@@ -47,10 +58,21 @@ module "vpc_b" {
 
   create_igw            = true
   enable_nat_gateway     = true
-  #single_nat_gateway     = false
   one_nat_gateway_per_az = true
   #enable_vpn_gateway     = true
   enable_dns_hostnames    = true
+
+  manage_security_group  = true
+  security_group_ingress = [
+    {cidr_block = "0.0.0.0/0",from_port = 22, to_port = 22, protocol = "SSH"},
+    {cidr_block = "0.0.0.0/0",from_port = 80, to_port = 80, protocol = "TCP"}, 
+    {cidr_block = "0.0.0.0/0",from_port = 443, to_port = 443, protocol = "TCP"},
+    {cidr_block = "0.0.0.0/0",from_port = 0, to_port = 0, protocol = "ICMP"}]
+  security_group_egress  = [{cidr_block = "0.0.0.0/0",from_port = 0, to_port = 0}]
+  security_group_name = "VPC-B-SG"
+  security_group_tags = {
+    Name = "VPC-B-SG"
+    }
 
 #   tags = {
 #     Terraform   = "true"

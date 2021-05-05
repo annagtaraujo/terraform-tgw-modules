@@ -22,7 +22,7 @@ module "tgw" {
 
       tgw_routes = [
         {
-          destination_cidr_block = "10.20.0.0/16"
+          destination_cidr_block = "10.10.0.0/16"
         },
         {
           blackhole              = true
@@ -31,12 +31,16 @@ module "tgw" {
       ]
     },
     vpc_b = {
-      vpc_id     = module.vpc_b.vpc_id
-      subnet_ids = module.vpc_b.private_subnets
+      vpc_id                                          = module.vpc_b.vpc_id
+      subnet_ids                                      = module.vpc_b.private_subnets
+      dns_support                                     = false #o true deu problema: send request failed │ caused by: Post "https://ec2.us-west-2.amazonaws.com/": read tcp 192.168.0.97:32794->54.240.253.45:443: read: connection reset by peer
+      ipv6_support                                    = false
+      transit_gateway_default_route_table_association = false
+      transit_gateway_default_route_table_propagation = false
 
       tgw_routes = [
         {
-          destination_cidr_block = "10.10.0.0/16"
+          destination_cidr_block = "10.20.0.0/16"
         },
         {
           blackhole              = true
